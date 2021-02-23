@@ -1,6 +1,6 @@
 ## Interface: 90002
-## Title: KhunTark's Unstable Scripts
+## Title: KhunTark's Scripts Unstable
 ## Notes: Enable useful script for myself. but this is unstable
-## Author: Thunday-Tichondrius/Frostmourne
+## Author: KhunTark
 
 Script_Extend\_.xml

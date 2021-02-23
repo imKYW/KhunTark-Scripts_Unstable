@@ -13,7 +13,7 @@ local useShadow = true
 -- CODE ITSELF
 ---------------------------------------------
 
-local StatsFrame = CreateFrame('Frame', 'LynStats', UIParent)
+local KTinfoFrame = CreateFrame('Frame', 'KTinfo', UIParent)
 
 local color
 if customColor then
@@ -34,24 +34,6 @@ local function memFormat(number)
 		return string.format("%.2f mb", (number / 1024))
 	else
 		return string.format("%.1f kb", floor(number))
-	end
-end
-
-local function numFormat(v)
-	if v > 1E10 then
-		return (floor(v/1E9)).."b"
-	elseif v > 1E9 then
-		return (floor((v/1E9)*10)/10).."b"
-	elseif v > 1E7 then
-		return (floor(v/1E6)).."m"
-	elseif v > 1E6 then
-		return (floor((v/1E6)*10)/10).."m"
-	elseif v > 1E4 then
-		return (floor(v/1E3)).."k"
-	elseif v > 1E3 then
-		return (floor((v/1E3)*10)/10).."k"
-	else
-		return v
 	end
 end
 
@@ -78,13 +60,6 @@ local function RGBGradient(num)
     return r, g, b
 end
 
-local function RGBToHex(r, g, b)
-    r = r <= 1 and r >= 0 and r or 0
-    g = g <= 1 and g >= 0 and g or 0
-    b = b <= 1 and b >= 0 and b or 0
-    return string.format('|cff%02x%02x%02x', r*255, g*255, b*255)
-end
-
 local function addonCompare(a, b)
 	return a.memory > b.memory
 end
@@ -98,8 +73,8 @@ local function clearGarbage()
 	print("|c0000ddffCleaned:|r "..memFormat(before-after))
 end
 
-StatsFrame:EnableMouse(true)
-StatsFrame:SetScript("OnMouseDown", function()
+KTinfoFrame:EnableMouse(true)
+KTinfoFrame:SetScript("OnMouseDown", function()
 	clearGarbage()
 end)
 
@@ -169,25 +144,25 @@ local function addonTooltip(self)
 	GameTooltip:Show()
 end
 
-StatsFrame:SetScript("OnEnter", function()
-	addonTooltip(StatsFrame)
+KTinfoFrame:SetScript("OnEnter", function()
+	addonTooltip(KTinfoFrame)
 end)
-StatsFrame:SetScript("OnLeave", function()
+KTinfoFrame:SetScript("OnLeave", function()
 	GameTooltip:Hide()
 end)
 
-StatsFrame:SetPoint(unpack(position))
-StatsFrame:SetWidth(50)
-StatsFrame:SetHeight(fontSize)
+KTinfoFrame:SetPoint(unpack(position))
+KTinfoFrame:SetWidth(50)
+KTinfoFrame:SetHeight(fontSize)
 
-StatsFrame.text = StatsFrame:CreateFontString(nil, 'BACKGROUND')
-StatsFrame.text:SetPoint(textAlign, StatsFrame)
-StatsFrame.text:SetFont(font, fontSize, fontFlag)
+KTinfoFrame.text = KTinfoFrame:CreateFontString(nil, 'BACKGROUND')
+KTinfoFrame.text:SetPoint(textAlign, KTinfoFrame)
+KTinfoFrame.text:SetFont(font, fontSize, fontFlag)
 if useShadow then
-	StatsFrame.text:SetShadowOffset(1, -1)
-	StatsFrame.text:SetShadowColor(0, 0, 0)
+	KTinfoFrame.text:SetShadowOffset(1, -1)
+	KTinfoFrame.text:SetShadowColor(0, 0, 0)
 end
-StatsFrame.text:SetTextColor(color.r, color.g, color.b)
+KTinfoFrame.text:SetTextColor(color.r, color.g, color.b)
 
 local lastUpdate = 0
 
@@ -195,15 +170,15 @@ local function update(self,elapsed)
 	lastUpdate = lastUpdate + elapsed
 	if lastUpdate > 1 then
 		lastUpdate = 0
-		StatsFrame.text:SetText(getFPS().." # "..getMemory().." # "..getLatency().." "..getLatencyWorld())
-		self:SetWidth(StatsFrame.text:GetStringWidth())
-		self:SetHeight(StatsFrame.text:GetStringHeight())
+		KTinfoFrame.text:SetText(getFPS().." # "..getMemory().." # "..getLatency().." "..getLatencyWorld())
+		self:SetWidth(KTinfoFrame.text:GetStringWidth())
+		self:SetHeight(KTinfoFrame.text:GetStringHeight())
 	end
 end
 
-StatsFrame:SetScript("OnEvent", function(self, event)
+KTinfoFrame:SetScript("OnEvent", function(self, event)
 	if(event=="PLAYER_LOGIN") then
 		self:SetScript("OnUpdate", update)
 	end
 end)
-StatsFrame:RegisterEvent("PLAYER_LOGIN")
+KTinfoFrame:RegisterEvent("PLAYER_LOGIN")
