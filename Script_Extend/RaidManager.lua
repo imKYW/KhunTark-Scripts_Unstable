@@ -114,8 +114,8 @@ end
 --create manager frame
 
 manager:SetFrameStrata("DIALOG")
-manager:SetSize(200,390)
-manager:SetPoint("TOPLEFT", -190, -30)
+manager:SetSize(200,290)
+manager:SetPoint("TOPLEFT", -190, -300)
 manager:SetAlpha(0.4)
 manager:SetBackdrop(backdrop)
 manager:SetBackdropColor(0.1,0.1,0.1,0.9)
@@ -131,40 +131,6 @@ button = manager:CreateButton(A.."ButtonWMCancel", "|TInterface\\Buttons\\UI-Gro
 button:SetScript("OnClick", ClearRaidMarker)
 button:SetPoint("TOP", previousButton, "BOTTOM", 0, 0)
 previousButton = button
-
---rolecheck button
-button = manager:CreateButton(A.."ButtonRoleCheck", "|TInterface\\LFGFrame\\LFGRole:14:14:0:0:64:16:32:48:0:16|t", "Role check")
-button:SetScript("OnClick", InitiateRolePoll)
-button:SetPoint("TOP", previousButton, "BOTTOM", 0, -10)
-previousButton = button
-
---raid to party button
-leftButton = manager:CreateButton(A.."ButtonRaidToParty", "|TInterface\\GroupFrame\\UI-Group-AssistantIcon:14:14:0:0|t", "Raid to party")
-leftButton:SetScript("OnClick", ConvertToParty)
-leftButton:SetPoint("RIGHT", button, "LEFT", 0, 0)
-
---readycheck button
-button = manager:CreateButton(A.."ButtonReady", "|TInterface\\RaidFrame\\ReadyCheck-Ready:14:14:0:0|t", "Ready check")
-button:SetScript("OnClick", DoReadyCheck)
-button:SetPoint("TOP", previousButton, "BOTTOM", 0, 0)
-previousButton = button
-
---party to raid button
-leftButton = manager:CreateButton(A.."ButtonPartyToRaid", "|TInterface\\GroupFrame\\UI-Group-LeaderIcon:14:14:0:0|t", "Party to raid")
-leftButton:SetScript("OnClick", ConvertToRaid)
-leftButton:SetPoint("RIGHT", button, "LEFT", 0, 0)
-
---pull button
-button = manager:CreateButton(A.."ButtonPullCounter", "|TInterface\\TargetingFrame\\UI-TargetingFrame-Skull:14:14:0:0|t", "Boss pull in 6")
-button:SetPoint("TOP", previousButton, "BOTTOM", 0, 0)
-button:SetAttribute("type", "macro")
-button:SetAttribute("macrotext", format("/pull %d", 6))
-previousButton = button
-
---stopwatch toggle
-leftButton = manager:CreateButton(A.."ButtonStopWatch", "|TInterface\\ChatFrame\\UI-ChatIcon-ArmoryChat-AwayMobile:14:14:0:0|t", "Toggle stopwatch")
-leftButton:SetScript("OnClick", Stopwatch_Toggle)
-leftButton:SetPoint("RIGHT", button, "LEFT", 0, 0)
 
 --toggleButton
 local toggleButton = CreateFrame("BUTTON", A.."ToggleButton", manager, "SecureHandlerClickTemplate")
