@@ -3,4 +3,5 @@
 ## Notes: Enable useful script for myself. but this is unstable
 ## Author: KhunTark
 
+Script_Blizzard\_.xml
 Script_Extend\_.xml
