@@ -1,6 +1,6 @@
 local setFont, _, setFontFlags = NumberFontNormal:GetFont()
 
-local slot = {
+local Slots = {
     [1] = "Head",
     [2] = "Neck",
     [3] = "Shoulder",
@@ -19,11 +19,11 @@ local slot = {
     [17] = "SecondaryHand"
 }
 
-local f = {
+local framePD = {
     player = CreateFrame("Frame"),
     target = CreateFrame("Frame"),
 }
-f.player:SetParent(PaperDollItemsFrame)
+framePD.player:SetParent(PaperDollItemsFrame)
 
 local iLvlText = {
     player = {},
@@ -37,16 +37,16 @@ local function GetLevels(target)
     else
         button = "Inspect"
         if not iLvlText[target].ilvl then
-            iLvlText[target].ilvl = f.target:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
+            iLvlText[target].ilvl = framePD.target:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
         end
         iLvlText[target].ilvl:SetText("iLV " .. C_PaperDollInfo.GetInspectItemLevel(target))
         iLvlText[target].ilvl:SetPoint("RIGHT", InspectPaperDollItemsFrame, "TOPRIGHT", -5, -45)
     end
     local _, averageILvl = GetAverageItemLevel()
     for k = 1, 17 do
-        if slot[k] then
+        if Slots[k] then
             if not iLvlText[target][k] then
-                iLvlText[target][k] = f[target]:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
+                iLvlText[target][k] = framePD[target]:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
             end
             local itemLink = GetInventoryItemLink(target, k)
             if itemLink then
@@ -57,9 +57,9 @@ local function GetLevels(target)
                 iLvlText[target][k]:SetText(itemLevel)
                 iLvlText[target][k]:SetTextColor(colorR, colorG, colorB)
                 if k == 2 and itemQuality == 6 and target == "player" then
-                    iLvlText[target][k]:SetPoint("TOP", button .. slot[k] .. "Slot", "TOP", 0, -2)
+                    iLvlText[target][k]:SetPoint("TOP", button .. Slots[k] .. "Slot", "TOP", 0, -2)
                 else
-                    iLvlText[target][k]:SetPoint("BOTTOM", button .. slot[k] .. "Slot", "BOTTOM", 0, 2)
+                    iLvlText[target][k]:SetPoint("BOTTOM", button .. Slots[k] .. "Slot", "BOTTOM", 0, 2)
                 end
             elseif iLvlText[target][k] then
                 iLvlText[target][k]:SetText("")
@@ -69,16 +69,16 @@ local function GetLevels(target)
 end
 
 -- Character
-f.player:RegisterEvent("ITEM_UNLOCKED")
-f.player:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-f.player:SetScript("OnEvent", function() GetLevels("player") end)
+framePD.player:RegisterEvent("ITEM_UNLOCKED")
+framePD.player:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+framePD.player:SetScript("OnEvent", function() GetLevels("player") end)
 PaperDollItemsFrame:HookScript("OnShow", function() GetLevels("player") end)
 PaperDollItemsFrame:HookScript("OnHide", function() collectgarbage() end)
 
 -- Inspect
-f.target:RegisterEvent("ADDON_LOADED")
-f.target:RegisterEvent("INSPECT_READY")
-f.target:SetScript("OnEvent", function(self, event, ...)
+framePD.target:RegisterEvent("ADDON_LOADED")
+framePD.target:RegisterEvent("INSPECT_READY")
+framePD.target:SetScript("OnEvent", function(self, event, ...)
     if event == "ADDON_LOADED" and ... == "Blizzard_InspectUI" then
         self:SetParent(InspectPaperDollItemsFrame)
         self:UnregisterEvent("ADDON_LOADED")
