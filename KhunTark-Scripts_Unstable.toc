@@ -1,4 +1,4 @@
-## Interface: 90105
+## Interface: 90200
 ## Title: KhunTark's Scripts Unstable
 ## Notes: Enable useful script for myself. but this is unstable
 ## Author: KhunTark
