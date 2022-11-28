@@ -2,6 +2,5 @@
 ..\FrameXML\UI.xsd">
 
     <Script file="Info.lua" />
-    <Script file="RaidManager.lua" />
 
 </Ui>
